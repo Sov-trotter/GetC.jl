@@ -7,6 +7,12 @@ built PC desktop running Linux (Fedora 17). Have fun!
 #Credit
 
 All of this was written by Jasper den Ouden (https://github.com/o-jasper). I
-simply to put it into a Julia package.  All credit goes to him.
+simply put it into a Julia package.  All credit goes to him.
 
---rennis250 & o-jasper (2012, GPL until further notice)
+Thanks to the Julia team (http://julialang.org) for making Julia, a programming
+language that many have been longing for, whether they knew about it or not.
+The "Octave-for-C-programmers," as one could think of it, is an incredibly fast
+and powerful programming language that is a welcome breath of fresh air in the
+technical and numerical programming communities.
+
+--rennis250 & o-jasper
