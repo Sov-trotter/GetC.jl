@@ -1,8 +1,7 @@
 This package is a minimal implementation of Jasper's Julia FFI. It will load
 the ccall function/type signatures specificed by Jasper's FFI.
 
-This has been tested on a 2010 Macbook running Linux (Fedora 17) and a custom
-built PC desktop running Linux (Fedora 17). Have fun!
+Have fun!
 
 #Credit
 
