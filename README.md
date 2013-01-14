@@ -3,6 +3,12 @@ the ccall function/type signatures specificed by Jasper's FFI.
 
 Have fun!
 
+#Installation
+
+```julia
+Pkg.add("GetC")
+```
+
 #Credit
 
 All of this was written by Jasper den Ouden (https://github.com/o-jasper). I
