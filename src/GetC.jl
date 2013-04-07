@@ -35,7 +35,7 @@ macro get_c_fun(lib, to_name, from_fun)
     arguments = #Whine about stuff done wrong. Convert arguments if needed.
     map(function (arg)
         if isa(arg, Symbol) #Just symbols are taken as types.
-            arg=  Expr(_of_type_sym,{gensym(),arg},Any) #Gensym their argument
+            arg=  :(_of_type_sym($(gensym()),arg)) #Gensym their argument
         end 
         assert(isa(arg,Expr), "$arg is not an expression; can't have `Any` types at this point.")
         assert(arg.head== _of_type_sym, "Argument expression $arg is not a type specifier (expect `var::type`")
@@ -48,7 +48,7 @@ macro get_c_fun(lib, to_name, from_fun)
     input_types = map(function (arg) arg.args[2] end, arguments)
 
     # Construct the result.
-    c_sym = Expr(:quote,{c_name},Any)
+    c_sym = Expr(:quote,c_name)
     fetching = nothing
     if isa(lib, Symbol) #TODO change things elsewhere so this can be removed.
         warn_once("Old style of getting foreign call. Depreciated.")
@@ -58,15 +58,9 @@ macro get_c_fun(lib, to_name, from_fun)
         # isa(lib, Expr) && lib.head == symbol("quote") )
         fetching = :($c_sym, $lib)
     end
-    body = quote 
-        $(Expr(:ccall, 
-        cat(1, {fetching,
-        return_type, Expr(:tuple,input_types,Any)},
-        argument_names), Any))
-    end
-    ret= Expr(:function,
-        {Expr(:call, cat(1,{to_name},argument_names),Any), body},
-        Any)
+    body = Expr(:ccall, fetching,return_type,Expr(:tuple,input_types...),
+                argument_names...)
+    ret= Expr(:function, Expr(:call, to_name, argument_names...), body)
     return esc(ret)
 end
 
