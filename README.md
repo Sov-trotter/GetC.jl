@@ -9,8 +9,7 @@ Pkg.add("GetC")
 
 #Credit
 
-All of this was written by [Jasper den Ouden](https://github.com/o-jasper). I
-simply put it into a Julia package.  All credit goes to him.
+The original idea and version was developed by [Jasper den Ouden](https://github.com/o-jasper).  The current implementation is a trimmed version with some updates for changes to Expr in Julia 0.2.
 
 Thanks to the [Julia team](http://julialang.org) for making Julia, a programming
 language that many have been longing for, whether they knew about it or not.
