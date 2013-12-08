@@ -4,32 +4,33 @@
 
 module GetC
 
-export @get_c_fun
+export @getCFun
 
-const _of_type_sym = symbol("::")
+const __ofTypeSym = symbol("::")
 
-macro get_c_fun(lib, jlfun, cfun)
-    c_name = cfun.args[1].args[1]
+macro getCFun(lib, jlFun, cFun)
+    cName = cFun.args[1].args[1]
 
     arguments = map(function (arg)
                         if isa(arg, Symbol)
-                            arg = Expr(_of_type_sym, arg)
+                            arg = Expr(__ofTypeSym, arg)
                         end
                         return arg
-                    end, cfun.args[1].args[2:])
+                    end, cFun.args[1].args[2:])
 
-    # Get info out of arguments of `from_fun`
-    argument_names = map(arg->arg.args[1], arguments)
-    return_type    = cfun.args[2]
-    input_types    = map(arg->arg.args[2], arguments)
+    # Get info out of arguments of `cFun`
+    argumentNames = map(arg->arg.args[1], arguments)
+    returnType    = cFun.args[2]
+    inputTypes    = map(arg->arg.args[2], arguments)
 
     # Construct the result.
-    c_sym       = Expr(:quote,c_name)
-    sym_and_lib = :($c_sym, $lib)
+    cSym       = Expr(:quote,cName)
+    symAndLib = :($cSym, $lib)
 
-    esc(:(function $jlfun($(arguments...))
-              Expr(:ccall, $sym_and_lib, $return_type, Expr(:tuple,$(input_types...)), $(argument_names...))
-          end))
+    body = Expr(:ccall, symAndLib, returnType, Expr(:tuple,inputTypes...), argumentNames...)
+    ret  = Expr(:function, Expr(:call, jlFun, argumentNames...), body)
+    return esc(ret)
+
 end
 
 end #module GetC
