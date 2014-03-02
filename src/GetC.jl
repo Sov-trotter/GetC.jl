@@ -16,7 +16,7 @@ macro getCFun(lib, jlFun, cFun)
                             arg = Expr(__ofTypeSym, arg)
                         end
                         return arg
-                    end, cFun.args[1].args[2:])
+                    end, cFun.args[1].args[2:end])
 
     # Get info out of arguments of `cFun`
     argumentNames = map(arg->arg.args[1], arguments)
