@@ -6,7 +6,7 @@ module GetC
 
 export @getCFun
 
-const __ofTypeSym = symbol("::")
+const __ofTypeSym = Symbol("::")
 
 macro getCFun(lib, jlFun, cFun)
     cName = cFun.args[1].args[1]
